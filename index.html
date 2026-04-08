@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Márton Áron Cserkész Egyesület - Adó 1%</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;800&family=Titillium+Web:ital,wght@0,400;1,200;1,400&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- SZÍNPALETTA ÉS ALAPBEÁLLÍTÁSOK --- */
+        :root {
+            --lime-green: #8cc63f; 
+            --deep-purple: #5c4b8a; 
+            --dark-ink: #1d1d1b; 
+            --sand-bg: #f4f1ea; 
+            --campfire-orange: #d95510; 
+            --white: #ffffff;
+            
+            --font-main: 'Sora', sans-serif;
+            --font-secondary: 'Titillium Web', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--sand-bg);
+            color: var(--dark-ink);
+            font-family: var(--font-main);
+            font-weight: 400;
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: url('topography.svg');
+            background-size: cover;
+            background-attachment: fixed;
+            opacity: 0.15; 
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        h1, h2, h3 { font-weight: 800; }
+        
+        .note-text {
+            font-family: var(--font-secondary);
+            font-weight: 200;
+            font-style: italic;
+            color: var(--deep-purple);
+        }
+
+        /* --- STICKY NAVIGÁCIÓ --- */
+        header {
+            background-color: var(--white);
+            color: var(--dark-ink);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 10px 20px; /* Vékonyabb alap menü */
+            box-shadow: 0 4px 15px rgba(29, 29, 27, 0.08);
+            transition: padding 0.3s ease;
+        }
+
+        header.shrink {
+            padding: 5px 20px;
+        }
+
+        .nav-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+        }
+
+        .header-logo {
+            height: 45px;
+            margin-right: 15px;
+            transition: height 0.3s ease;
+        }
+
+        header.shrink .header-logo {
+            height: 30px;
+        }
+
+        .nav-container h3 {
+            font-size: 1.1rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* --- HŐS SZEKCIÓ (BANNER) --- */
+        .hero {
+            position: relative;
+            /* JELENTŐSEN CSÖKKENTETT PADDING A VÉKONYABB BANNERÉRT */
+            padding: 40px 20px; 
+            text-align: center;
+            
+            /* --- 2. IDE JÖN A CSAPATKÉP ELÉRÉSI ÚTJA --- */
+            background-image: linear-gradient(rgba(244, 241, 234, 0.7), rgba(244, 241, 234, 0.95)), url('csapat.jpg');
+            
+            background-size: cover;
+            background-position: center;
+            border-bottom: 3px solid var(--lime-green);
+        }
+
+        .hero h1 {
+            font-size: 2.5rem; /* Kisebb betűméret a vékonyabb bannerhez */
+            margin-bottom: 10px;
+            color: var(--dark-ink);
+            line-height: 1.1;
+        }
+
+        .hero p.intro {
+            max-width: 750px;
+            margin: 0 auto 20px auto;
+            font-size: 1.05rem;
+            font-weight: 400;
+        }
+
+        .tax-box {
+            background: var(--white);
+            border: 2px dashed var(--deep-purple);
+            display: inline-block;
+            padding: 20px 30px; /* Kisebb belső tér */
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            box-shadow: 0 10px 20px rgba(92, 75, 138, 0.1);
+        }
+
+        .tax-number {
+            display: block;
+            font-size: 2.4rem; /* Kisebb adószám */
+            font-weight: 800;
+            color: var(--lime-green);
+            margin: 0 0 10px 0;
+            letter-spacing: 1px;
+        }
+
+        /* --- GOMBOK (FIX SZÉLESSÉGGEL) --- */
+        .btn {
+            background-color: var(--deep-purple);
+            color: var(--white);
+            border: none;
+            padding: 12px 24px;
+            font-family: var(--font-main);
+            font-size: 0.95rem;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+            
+            /* --- EZ GÁTOLJA MEG AZ UGRÁLÁST --- */
+            min-width: 220px; 
+            text-align: center;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(92, 75, 138, 0.3);
+        }
+
+        .btn-primary {
+            background-color: var(--campfire-orange);
+        }
+
+        .btn-primary:hover {
+            background-color: #bf470d;
+            box-shadow: 0 6px 15px rgba(217, 85, 16, 0.3);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* Kis másoló gomb (szintén fix szélességgel) */
+        .btn-small {
+            background-color: var(--deep-purple);
+            color: white;
+            border: none;
+            padding: 4px 10px;
+            font-family: var(--font-main);
+            font-size: 0.85rem;
+            font-weight: 600;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-left: 8px;
+            vertical-align: middle;
+            transition: background 0.2s;
+            
+            /* --- EZ GÁTOLJA MEG AZ UGRÁLÁST --- */
+            min-width: 185px; 
+            text-align: center;
+        }
+        .btn-small:hover { background-color: #47386d; }
+
+        /* --- TURISTA ÖSVÉNY (TIMELINE) --- */
+        .steps-container {
+            max-width: 950px;
+            margin: 50px auto;
+            padding: 0 20px;
+        }
+
+        .trail-timeline {
+            border-left: 4px dashed var(--lime-green);
+            margin-left: 30px;
+            padding-left: 45px;
+            position: relative;
+        }
+
+        .trail-step {
+            margin-bottom: 70px;
+            position: relative;
+        }
+
+        .trail-dot {
+            position: absolute;
+            left: -73px; 
+            top: 0;
+            width: 50px;
+            height: 50px;
+            background-color: var(--deep-purple);
+            color: var(--white);
+            border-radius: 50%;
+            text-align: center;
+            line-height: 50px;
+            font-size: 1.5rem;
+            font-weight: 800;
+            box-shadow: 0 0 0 6px var(--sand-bg);
+            z-index: 2;
+        }
+
+        .trail-content {
+            display: flex;
+            gap: 40px;
+            align-items: flex-start;
+        }
+
+        .trail-text {
+            flex: 1;
+            min-width: 280px;
+        }
+
+        .trail-text h2 {
+            font-size: 1.5rem;
+            color: var(--dark-ink);
+            margin-bottom: 10px;
+            margin-top: 5px;
+        }
+
+        .trail-text ul {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+
+        .trail-text li {
+            margin-bottom: 8px;
+        }
+
+        .trail-image {
+            flex: 1.2;
+            background: var(--white);
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0 8px 25px rgba(29, 29, 27, 0.06);
+            border: 1px solid rgba(29, 29, 27, 0.05);
+        }
+
+        .trail-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 6px;
+        }
+
+        /* --- LÁBLÉC --- */
+        .site-footer {
+            background-color: var(--dark-ink);
+            color: var(--sand-bg);
+            padding: 40px 20px;
+            text-align: center;
+            margin-top: 50px;
+            border-top: 6px solid var(--lime-green);
+        }
+
+        .footer-content h3 {
+            color: var(--lime-green);
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+
+        .footer-content a {
+            color: var(--lime-green);
+            text-decoration: none;
+            font-weight: 600;
+            margin: 0 8px;
+            transition: color 0.2s;
+        }
+
+        .footer-content a:hover {
+            color: var(--campfire-orange);
+        }
+
+        /* --- MOBIL NÉZET --- */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2rem; }
+            .tax-number { font-size: 2rem; }
+            .btn { min-width: 100%; } /* Mobilon a gombok töltsék ki a helyet */
+            .btn-small { min-width: auto; } /* A pici gomb mobilon maradjon pici */
+            .trail-timeline {
+                margin-left: 15px;
+                padding-left: 25px;
+            }
+            .trail-dot {
+                left: -44px;
+                width: 35px;
+                height: 35px;
+                line-height: 35px;
+                font-size: 1.1rem;
+                box-shadow: 0 0 0 4px var(--sand-bg);
+            }
+            .trail-content {
+                flex-direction: column;
+                gap: 20px;
+            }
+            .button-group { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+
+    <header id="mainHeader">
+        <div class="nav-container">
+            <img src="logo.png" alt="Cserkész Liliom Logó" class="header-logo">
+            <h3>Márton Áron Cserkész Egyesület</h3>
+        </div>
+    </header>
+
+    <section class="hero">
+        <h1>Ajánld fel nekünk adód 1%-át!</h1>
+        <p class="intro">
+            Segíts, hogy idén is felejthetetlen táborokat, biztonságos felszereléseket és életre szóló élményeket biztosíthassunk a cserkészeinknek. A Te 1%-od a mi jövőnk alapja!
+        </p>
+
+        <div class="tax-box">
+            Adószámunk:<br>
+            <span class="tax-number" id="taxNum">19347521-1-06</span>
+            
+            <div class="button-group">
+                <button class="btn" onclick="copyTax('taxNum', 'copyBtnMain')" id="copyBtnMain">
+                    Adószám másolása
+                </button>
+                <a href="https://eszja.nav.gov.hu/app/login/#login" target="_blank" class="btn btn-primary">
+                    Ugrás az e-SZJA oldalra
+                </a>
+            </div>
+            <p class="note-text" style="margin-top: 10px;">Minden felajánlás hatalmas segítség a csapatnak.</p>
+        </div>
+    </section>
+
+    <section class="steps-container">
+        <div class="trail-timeline">
+
+            <div class="trail-step">
+                <div class="trail-dot">1</div>
+                <div class="trail-content">
+                    <div class="trail-text">
+                        <h2>Lépj be az e-SZJA oldalra</h2>
+                        <p>Kattints a fenti narancssárga gombra, vagy keresd fel az <b>eszja.nav.gov.hu</b> oldalt, és jelentkezz be az Ügyfélkapuddal (vagy DÁP applikációval).</p>
+                    </div>
+                    <div class="trail-image">
+                        <img src="NAV01_belepes.png" alt="NAV belépés">
+                    </div>
+                </div>
+            </div>
+
+            <div class="trail-step">
+                <div class="trail-dot">2</div>
+                <div class="trail-content">
+                    <div class="trail-text">
+                        <h2>Válaszd az 1+1% nyilatkozatot</h2>
+                        <p>Miután sikeresen beléptél, a főoldalon a jobb oldali csempén kattints a kék színű <b>"Nyilatkozom"</b> gombra az 1+1%-os nyilatkozat dobozában.</p>
+                    </div>
+                    <div class="trail-image">
+                        <img src="NAV02_nyilatkozat.png" alt="NAV nyilatkozat">
+                    </div>
+                </div>
+            </div>
+
+            <div class="trail-step">
+                <div class="trail-dot">3</div>
+                <div class="trail-content">
+                    <div class="trail-text">
+                        <h2>Keresd meg a csapatunkat</h2>
+                        <p>Kétféleképpen is könnyedén megtalálsz minket a "Civil kedvezményezett" blokkban:</p>
+                        <ul>
+                            <li>
+                                <b>Adószám alapján (Leggyorsabb):</b> <i>A civil kedvezményezett adószáma</i> dobozba egyszerűen másold be a számunkat. 
+                                <button class="btn-small" onclick="copyTax('taxNum', 'copyBtnSmall')" id="copyBtnSmall">19347521-1-06 Másolása</button>
+                            </li>
+                            <li style="margin-top: 10px;">
+                                <b>Név alapján:</b> Kattints a <i>"Kereső megjelenítése"</i> gombra, és a <b>Név</b> mezőbe (nem a törzsszámhoz!) írd be: <b>Márton Áron Cserkész</b>. Majd kattints a Lekérdezés gombra.
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="trail-image">
+                        <img src="NAV03_kereses.png" alt="NAV keresés">
+                    </div>
+                </div>
+            </div>
+
+            <div class="trail-step">
+                <div class="trail-dot">4</div>
+                <div class="trail-content">
+                    <div class="trail-text">
+                        <h2>Add be a nyilatkozatot</h2>
+                        <p>Ha a rendszer megtalálta a Márton Áron Cserkész Egyesületet, görgess a lap aljára, és kattints a <b>"Tovább a beadáshoz"</b> gombra a folyamat véglegesítéséhez.</p>
+                        <p class="note-text" style="margin-top: 10px;">Jó munkát végeztél, köszönjük a támogatásod!</p>
+                    </div>
+                    <div class="trail-image">
+                        <img src="NAV04_veglegesites.png" alt="NAV véglegesítés">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <footer class="site-footer">
+        <div class="footer-content">
+            <h3>Márton Áron Cserkész Egyesület</h3>
+            <p>Adószám: 19347521-1-06</p>
+            <p style="margin: 15px 0;">
+                Email: <a href="mailto:info@martonaron.hu">info@martonaron.hu</a> | 
+                Telefon: <a href="tel:+36301234567">+36 30 123 4567</a>
+            </p>
+            <p style="margin-top: 30px; font-family: var(--font-secondary); font-weight: 200; font-size: 0.9rem; opacity: 0.7;">
+                Készült a Márton Áron Cserkész Egyesület támogatására. 
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Zsugorodó fejléc
+        window.addEventListener("scroll", function() {
+            const header = document.getElementById("mainHeader");
+            if (window.scrollY > 50) {
+                header.classList.add("shrink");
+            } else {
+                header.classList.remove("shrink");
+            }
+        });
+
+        // Adószám másoló funkció (több gombot is kezel)
+        function copyTax(sourceId, btnId) {
+            const taxNum = document.getElementById(sourceId).innerText;
+            const btn = document.getElementById(btnId);
+            const originalText = btn.innerText;
+
+            navigator.clipboard.writeText(taxNum).then(() => {
+                btn.innerText = "Másolva! ✓";
+                btn.style.backgroundColor = "var(--lime-green)";
+                btn.style.color = "var(--dark-ink)";
+                
+                setTimeout(() => {
+                    btn.innerText = originalText;
+                    btn.style.backgroundColor = "var(--deep-purple)";
+                    btn.style.color = "var(--white)";
+                }, 3000);
+            }).catch(err => {
+                console.error('Hiba a másoláskor: ', err);
+            });
+        }
+    </script>
+</body>
+</html>
